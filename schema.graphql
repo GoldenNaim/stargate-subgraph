@@ -1,0 +1,57 @@
+type Swap @entity {
+	id: ID!
+	dstChainId: BigInt
+	dstPoolId: BigInt
+	
+	srcChainId: BigInt
+	srcPoolId: BigInt
+  
+	pool: Pool!
+  
+	refundAddress: Bytes
+	recipientAddress: Bytes
+  
+	amountLD: BigInt
+	minAmountLD: BigInt
+  
+	blockNumber: BigInt
+	timestamp: BigInt
+	txHash: Bytes
+}
+
+type Pool @entity {
+	id: ID!
+	poolId: BigInt
+	poolAddress: Bytes
+ 
+	token: Bytes
+	name: String
+	symbol: String
+ 
+	totalValueLocked: BigInt
+ 
+	sharedDecimals: BigInt
+	localDecimals: BigInt
+ 
+	creationBlockNumber: BigInt!
+	creationTimestamp: BigInt!
+	creationTxHash: Bytes
+}
+
+type Liquidity @entity {
+	id: ID!
+	action: String
+	functionCalled: String
+	poolId: BigInt
+	
+	user: Bytes
+	amount: BigInt
+	tokenAddress: Bytes
+	tokenName: String
+	tokenSymbol: String
+	tokenDecimals: BigInt
+	
+	txHash: Bytes
+	blockNumber: BigInt!
+	timestamp: BigInt!
+}
