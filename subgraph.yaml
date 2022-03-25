@@ -1,0 +1,37 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x8731d54E9D02c286767d56ac03e8037C07e01e98"
+      abi: Contract
+      startBlock: 14402864
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Swap
+        - Pool
+        - Liquidity
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: RedeemLocalCallback(uint16,indexed bytes,indexed uint256,uint256,uint256,address,uint256,uint256)
+          handler: onRLC
+      callHandlers:
+        - function: swap(uint16,uint256,uint256,address,uint256,uint256,(uint256,uint256,bytes),bytes,bytes)
+          handler: onSWAP
+        - function: swapRemote(uint16,bytes,uint256,uint256,uint256,uint256,address,(uint256,uint256,uint256,uint256,uint256,uint256),bytes)
+          handler: onSWAPREMOTE
+        - function: createPool(uint256,address,uint8,uint8,string,string)
+          handler: onCREATEPOOL
+        - function: addLiquidity(uint256,uint256,address)
+          handler: onADDLIQUIDITY
+        - function: instantRedeemLocal(uint16,uint256,address)
+          handler: onREMOVELIQUIDITY
+      file: ./src/mapping.ts
